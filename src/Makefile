@@ -27,7 +27,8 @@ include $(RT28xx_DIR)/os/linux/config.mk
 RTMP_SRC_DIR = $(RT28xx_DIR)/RT$(MODULE)
 
 #PLATFORM: Target platform
-PLATFORM = PC
+#PLATFORM = PC
+PLATFORM = CUSTOM1
 #PLATFORM = 5VT
 #PLATFORM = IKANOS_V160
 #PLATFORM = IKANOS_V180
@@ -193,6 +194,12 @@ endif
 ifeq ($(PLATFORM),BLPMP)
 LINUX_SRC = /home/sample/Customers/BroadLight/UBB/pmp16/bl234x-linux-2.6.21-small-v30.2
 CROSS_COMPILE = mips-wrs-linux-gnu-
+endif
+
+ifeq ($(PLATFORM),CUSTOM1)
+LINUX_SRC = /lib/modules/4.1.3-v7+/build
+LINUX_SRC_MODULE = /lib/modules/4.1.3-v7+/kernel/drivers/net/wireless/
+CROSS_COMPILE = 
 endif
 
 ifeq ($(PLATFORM),PC)

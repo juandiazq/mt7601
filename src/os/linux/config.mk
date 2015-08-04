@@ -1056,6 +1056,20 @@ endif
 
 GCCVERSION = $(shell gcc -dumpversion)
 
+ifeq ($(PLATFORM),CUSTOM1)
+    ifneq (,$(findstring 2.4,$(LINUX_SRC)))
+	# Linux 2.4
+	CFLAGS := -D__KERNEL__ -I$(LINUX_SRC)/include -O2 -fomit-frame-pointer -fno-strict-aliasing -fno-common -pipe -mpreferred-stack-boundary=2 -march=i686 -DMODULE -DMODVERSIONS -include $(LINUX_SRC)/include/linux/modversions.h $(WFLAGS)
+	export CFLAGS
+    else ifneq (,$(findstring 4.9,$(GCCVERSION)))
+	# GCC 4.9
+        EXTRA_CFLAGS := -Wno-error=date-time $(WFLAGS)
+    else
+	# Linux 2.6
+	EXTRA_CFLAGS := $(WFLAGS) 
+    endif
+endif
+
 ifeq ($(PLATFORM),PC)
     ifneq (,$(findstring 2.4,$(LINUX_SRC)))
 	# Linux 2.4
